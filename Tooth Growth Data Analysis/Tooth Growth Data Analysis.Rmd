@@ -1,0 +1,72 @@
+---
+output: word_document
+---
+# Statistical Inference Course Project 2
+Andres Mauricio Castro
+
+## Tooth Growth Data Analysis
+
+## Assignment Description
+1. Load the ToothGrowth data and perform some basic exploratory data analyses 
+2. Provide a basic summary of the data.
+3. Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
+4. State your conclusions and the assumptions needed for your conclusions. 
+
+## Load Data
+```{r}
+library(datasets)
+```
+
+## Exploratory Data Analysis
+
+We see the documentation, to get a rough idea of what the data represents.
+
+```{r}
+?ToothGrowth
+```
+
+### Summary Of The Dataset
+
+```{r}
+str(ToothGrowth)
+summary(ToothGrowth)
+```
+
+Create a box plot, to have an idea of how the dose is related to the tooth grows.
+```{r}
+boxplot(len~supp*dose, data=ToothGrowth, col=(c("gold","darkgreen")),main="Tooth Growth", xlab="Suppliment and Dose(mg)", ylab="length")
+```
+
+As per the plot, the higher the dose, the longer the tooth grows. It seems Orance Juice (OJ) has a better effect on teeth growth, than the other supplement type (VC).
+
+### Compare Tooth Growth By Supp And Dose
+
+We carry out T-tests at each dosage level for the two supplement type, in order to verify the support of our hyphotesis, from the previous plot.
+
+The T-test at 0.5 mg:
+```{r}
+t.test(len ~ supp, ToothGrowth[ToothGrowth$dose == .5, ])
+```
+
+The T-test at 1 mg:
+```{r}
+t.test(len ~ supp, ToothGrowth[ToothGrowth$dose == 1, ])
+```
+
+The T-test at 2 mg:
+```{r}
+t.test(len ~ supp, ToothGrowth[ToothGrowth$dose == 2, ])
+```
+
+### Conclusions
+
+The conclusions are based on the following assumptions:
+
+    - The guinea pigs are repesentative of the whole population.
+    - The distribution of means is supposed to be normal.
+    - The sample is supposed to be random.   
+
+From the exploratory data analysis, the higher the dose, the longer the tooth grows. It seems Orance Juice (OJ) has a better effect on teeth growth, than the other supplement type (VC).
+
+From the T-test analysis, according to the p-values that for dosages of 0.5 mg and 1 mg, orange juice is a more effective delivery method of vitamin C, to promote the tooth grow, so, we can validate the hypothesis for dosages at 0.5 and 1 mg.
+From the p-value for the 2 mg, we cannot conclude that orange juice is a better delivery method of vitamin C, to promote tooth growth, than the other delivery method (VC).
